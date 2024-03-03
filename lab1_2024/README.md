@@ -41,7 +41,7 @@ $$
 $$
 
 **First attempt**:
-![attempt](/approach.jpg)
+![attempt](approach.jpg)
 
 **Solution**:
-![solution](/solution2.png)
+![solution](solution2.png)
