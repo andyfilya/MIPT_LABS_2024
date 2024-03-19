@@ -1,8 +1,6 @@
 import math
 from scipy.special import gamma, factorial
 import matplotlib.pyplot as plt
-import numpy as np
-import pandas as pd
 
 T = (math.sqrt(32 * math.pi) * (gamma(5/4 + 0j) / gamma(3/4 + 0j))).real
 delta_t = list()
@@ -18,8 +16,6 @@ def generate_delta_t(n : int) -> list[float]: # // 10 -> for example if you want
   for _ in range(n):
     arr.append(T / (n * 10))
   return arr
-
-
 
 def first_eyler(u_real : list[float], v_real : list[float], x : float, delta_t : float):
   n, iter_num = 0, 2

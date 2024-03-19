@@ -46,3 +46,19 @@ $$
 
 **Solution**:
 ![solution](solution2.png)
+
+after some changes:
+
+**Solution->C_1**:
+![c_1][c_1_graph.png]
+
+**Solution->C_2**:
+![c_2][c_2_graph.png]
+
+**Solution->C_3**:
+![c_3][c_3_graph.png]
+
+**Solution->C_4**:
+![c_4][c_4_graph.png]
+
+
