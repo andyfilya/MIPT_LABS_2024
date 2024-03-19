@@ -49,16 +49,20 @@ $$
 
 after some changes:
 
-**Solution->C_1**:
-![c_1][c_1_graph.png]
+**Solution C_1**:
 
-**Solution->C_2**:
-![c_2][c_2_graph.png]
+![c1](c_1_graph.png)
 
-**Solution->C_3**:
-![c_3][c_3_graph.png]
+**Solution C_2**:
 
-**Solution->C_4**:
-![c_4][c_4_graph.png]
+![c2](c_2_graph.png)
+
+**Solution C_3**:
+
+![c3](c_3_graph.png)
+
+**Solution C_4**:
+
+![c4](c_4_graph.png)
 
 
