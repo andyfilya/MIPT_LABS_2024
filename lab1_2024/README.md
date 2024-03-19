@@ -22,8 +22,9 @@ $$
 
 ## __Standart Error__:
 we need to draw graphs, which illustrates the 
-$||f(T) - f(0)||$
-![e_delta_t](e_delta_t.png)
+$||f(T) - f(0)||$:
+
+![e_delta_t](delta.png)
 
 
 ## __Stability__:
