@@ -23,7 +23,7 @@ $$
 ## __Standart Error__:
 we need to draw graphs, which illustrates the 
 $||f(T) - f(0)||$
-![solution](e_delta_t.png)
+![e_delta_t](e_delta_t.png)
 
 
 ## __Stability__:
