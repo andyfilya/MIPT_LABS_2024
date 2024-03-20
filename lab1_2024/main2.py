@@ -59,24 +59,40 @@ def first_step(k : int, delta_t : float, real_t : float, net : list[float]) -> l
 
 
 def draw_graph_c1(c_1_x : list[float], net : list[float]):
-  plt.plot(net, c_1_x, color = "blue", label = "c_1(t)")
+  plt.plot(net, c_1_x, color = "blue", label = r"c_1(t)")
 
+
+  plt.xlabel("t")
+  plt.ylabel(r'c_1')
+
+  plt.grid()
   plt.legend()
   plt.show()
-
 def draw_graph_c2(c_1_x : list[float], net : list[float]):
-  plt.plot(net, c_1_x, color = "blue", label = "c_2(t)")
+  plt.plot(net, c_1_x, color = "blue", label = r"c_2(t)")
 
+  plt.xlabel("t")
+  plt.ylabel(r'c_2')
+
+  plt.grid()
   plt.legend()
   plt.show()
 def draw_graph_c3(c_1_x : list[float], net : list[float]):
-  plt.plot(net, c_1_x, color = "blue", label = "c_3(t)")
+  plt.plot(net, c_1_x, color = "blue", label = r'c_3(t)')
 
+  plt.xlabel("t")
+  plt.ylabel(r'c_3')
+
+  plt.grid()
   plt.legend()
   plt.show()
 def draw_graph_c4(c_1_x : list[float], net : list[float]):
-  plt.plot(net, c_1_x, color = "blue", label = "c_4(t)")
+  plt.plot(net, c_1_x, color = "blue", label = r'c_4(t)')
 
+  plt.xlabel("t")
+  plt.ylabel(r'c_4')
+  
+  plt.grid()
   plt.legend()
   plt.show()
 def net_generate(real_t : float) -> list[float]:
@@ -122,6 +138,7 @@ def main():
   solve_eq(real_t, net, ptr)
   print(c_1_real, c_2_real, c_3_real, c_4_real)
   print(net)
+
   draw_graph_c1(c_1_real, net)
   draw_graph_c2(c_2_real, net)
   draw_graph_c3(c_3_real, net)

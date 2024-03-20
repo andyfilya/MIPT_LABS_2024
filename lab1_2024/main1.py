@@ -53,13 +53,14 @@ def draw_graph(u_real : list[float], v_real : list[float], net : list[float]):
   plt.legend()
   plt.show()
 def draw_error(u_tmp : list[float], v_tmp : list[float], delta_t : list[float]):
-  plt.plot(delta_t, u_tmp, color = "blue", label = "||u(T) - u(0)||")
-  plt.plot(delta_t, v_tmp, color = "red", label = "||v(T) - v(0)||")
-
+  plt.plot(delta_t, u_tmp, color = "blue", label = r'$ ||u(T) - u(0)|| $')
+  plt.plot(delta_t, v_tmp, color = "red", label =  r'$ ||v(T) - v(0)|| $')
+  plt.title("iter_num = 10000")
   plt.legend()
+  plt.grid(True)
 
-  plt.xlabel("\Delta t")
-  plt.ylabel("\Psi (x)")
+  plt.xlabel(r'$ \Delta $t')
+  plt.ylabel(r'$ error $')
   
   plt.show()
 
@@ -81,11 +82,9 @@ def main():
 
     net = net_func(delta_t[m])
     print(len(u_real), len(v_real), len(net))
-    draw_graph(u_real, v_real, net)
     u_real = [1]
     v_real = [0]
   draw_error(u_tmp, v_tmp, delta_t)
 
 if __name__ == "__main__":
   main()
-
