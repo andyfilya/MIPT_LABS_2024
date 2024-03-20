@@ -8,7 +8,7 @@ t_d = 24 * 60 * 60
 k_1 = []
 k_2 = 10**5
 k_3 = 10**(-16)
-delta_t = 2 * t_d / 100
+delta_t = 2 * t_d / 10000
 
 def delta_t_generate(n : int) -> float:
   return 2 * t_d / n
