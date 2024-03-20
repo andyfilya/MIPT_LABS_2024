@@ -41,10 +41,10 @@ def init_steps(vars):
 
   return [f1, f2, f3, f4]
 
-def first_step(k : int, delta_t : float, real_t : float, net : list[float]):
-  init_ptr = [0.0, 0.0, 0.0, 0.0]
+def first_step(k : int, delta_t : float, real_t : float, net : list[float]) -> list[float]:
+  init_ptr = [t_d, t_d, t_d, t_d]
   for _ in range(k):
-    k_1_gen(real_t + delta_t)
+    k_1_gen(real_t)
     
     init_ptr = fsolve(init_steps, init_ptr)
     c_1_real.append(init_ptr[0])
@@ -53,6 +53,7 @@ def first_step(k : int, delta_t : float, real_t : float, net : list[float]):
     c_4_real.append(init_ptr[3])
 
     net.append(real_t)
+  return init_ptr
 
 
 
@@ -85,17 +86,16 @@ def to_solve(vars):
   x, y, z, l = vars
 
   f1 = 3 / 2 * x - 2 * c_1_real[-1] + 1 / 2 * c_1_real[-2] - delta_t * (k_1[-1] * z - k_2 * x)
-  f2 = 3 / 2 * y - 2 * c_2_real[-1] + 1 / 2 * c_2_real[-2] - delta_t * (k_1[-1] * z - k_2 * y * l)
+  f2 = 3 / 2 * y - 2 * c_2_real[-1] + 1 / 2 * c_2_real[-2] - delta_t * (k_1[-1] * z - k_3 * y * l)
   f3 = 3 / 2 * z - 2 * c_3_real[-1] + 1 / 2 * c_3_real[-2] - delta_t * (k_3 * y * l - k_1[-1] * z)
   f4 = 3 / 2 * l - 2 * c_4_real[-1] + 1 / 2 * c_4_real[-2] - delta_t * (k_2 * x - k_3 * y * l)
 
   return [f1, f2, f3, f4]
 
-def solve_eq(real_t : float, net : list[float]):
+def solve_eq(real_t : float, net : list[float], ptr : list[float]):
   iter_num = 1
-  ptr = [t_d, t_d, t_d, t_d]
   while real_t < 2 * t_d:
-    k_1_gen(real_t + delta_t)
+    k_1_gen(real_t)
 
     print(f'ptr : {ptr} \n\n')
     ptr = fsolve(to_solve, ptr)
@@ -115,12 +115,11 @@ def solve_eq(real_t : float, net : list[float]):
 def main():
   real_t = 0
   k_1_gen(real_t)
-  k_1_gen(real_t + delta_t)
 
   net = net_generate(real_t)
   real_t += delta_t
-  first_step(10, delta_t, real_t, net) # eyler for first 10 nums
-  solve_eq(real_t, net)
+  ptr = first_step(10, delta_t, real_t, net) # eyler for first 10 nums
+  solve_eq(real_t, net, ptr)
   print(c_1_real, c_2_real, c_3_real, c_4_real)
   print(net)
   draw_graph_c1(c_1_real, net)
