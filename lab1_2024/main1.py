@@ -1,6 +1,7 @@
 import math
 from scipy.special import gamma, factorial
 import matplotlib.pyplot as plt
+import numpy as np
 
 T = (math.sqrt(32 * math.pi) * (gamma(5/4 + 0j) / gamma(3/4 + 0j))).real
 delta_t = list()
@@ -63,6 +64,27 @@ def draw_error(u_tmp : list[float], v_tmp : list[float], delta_t : list[float]):
   plt.ylabel(r'$ error $')
   
   plt.show()
+def for_draw(z):
+  return abs(z ** 4 / 24 + z ** 3 / 6 + z ** 2 / 2 + z + 1)
+
+def draw_obl():
+  x_obl, y_obl = list(), list()
+  for i in np.arange(-10, 10, 0.01):
+    for j in np.arange(-10, 10, 0.01):
+      z = complex(i, j)
+      if for_draw(z) < 1:
+        x_obl.append(i)
+        y_obl.append(j)
+  plt.plot(x_obl, y_obl, color="blue")
+  plt.grid(True)
+  plt.legend()
+  plt.title(r'region of stability')
+  plt.xlabel(r'Re(z)')
+  plt.ylabel(r'Im(z)')
+
+  plt.show()
+
+
 
 def main():
   u_tmp, v_tmp = list(), list()
@@ -84,6 +106,7 @@ def main():
     print(len(u_real), len(v_real), len(net))
     u_real = [1]
     v_real = [0]
+  draw_obl()
   draw_error(u_tmp, v_tmp, delta_t)
 
 if __name__ == "__main__":

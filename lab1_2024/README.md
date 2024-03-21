@@ -30,6 +30,9 @@ $||f(T) - f(0)||$:
 ## __Stability__:
 ![stability](stability.jpg)
 
+## __Region of stability__:
+![region](region_of_stability.png)
+
 ## 2 __Exercise__:
 ![exercise](lab!_2024_2.png)
 
