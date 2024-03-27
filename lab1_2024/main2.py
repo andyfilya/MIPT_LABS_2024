@@ -91,7 +91,6 @@ def draw_graph_c4(c_1_x : list[float], net : list[float]):
 
   plt.xlabel("t")
   plt.ylabel(r'c_4')
-  
   plt.grid()
   plt.legend()
   plt.show()

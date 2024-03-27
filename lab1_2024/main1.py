@@ -12,6 +12,7 @@ x = 0
 def generate_e(a : float, b : float) -> float:
   return math.fabs(a - b)
 
+
 def generate_delta_t(n : int) -> list[float]: # // 10 -> for example if you want 150 pieces -> n = 10
   arr = list()
   for _ in range(n):
@@ -53,9 +54,13 @@ def draw_graph(u_real : list[float], v_real : list[float], net : list[float]):
 
   plt.legend()
   plt.show()
-def draw_error(u_tmp : list[float], v_tmp : list[float], delta_t : list[float]):
+def draw_error(u_tmp : list[float], v_tmp : list[float], u_tmpp : list[float], v_tmpp : list[float], delta_t : list[float]):
   plt.plot(delta_t, u_tmp, color = "blue", label = r'$ ||u(T) - u(0)|| $')
   plt.plot(delta_t, v_tmp, color = "red", label =  r'$ ||v(T) - v(0)|| $')
+  print(u_tmpp, v_tmpp)
+  plt.plot(delta_t[:-1], u_tmpp, color = "green", linestyle = "--", label = r'$ expected ||u(T) - u(0)|| $')
+  plt.plot(delta_t[:-1], v_tmpp, color = "orange", linestyle = "--", label = r'$ expected ||v(T) - v(0)|| $')
+  plt.plot()
   plt.title("iter_num = 10000")
   plt.legend()
   plt.grid(True)
@@ -65,7 +70,7 @@ def draw_error(u_tmp : list[float], v_tmp : list[float], delta_t : list[float]):
   
   plt.show()
 def for_draw(z):
-  return abs(z ** 4 / 24 + z ** 3 / 6 + z ** 2 / 2 + z + 1)
+  return abs(5 / 12 * z ** 3 + 1 / 2 * z ** 2 + z + 1)
 
 def draw_obl():
   x_obl, y_obl = list(), list()
@@ -88,12 +93,12 @@ def draw_obl():
 
 def main():
   u_tmp, v_tmp = list(), list()
+  u_tmp_2, v_tmp_2 = list(), list()
   p = int(input())
   u_real = [1]
   v_real = [0]  
   delta_t = [T / (10 * k) for k in range (1,p)]
   for m in range(p-1):
-    print("started ", m+1, "iteration...")
     x = 0
     first_eyler(u_real, v_real, x, delta_t[m]) 
     x += 3 * delta_t[m]
@@ -102,12 +107,18 @@ def main():
     u_tmp.append(generate_e(u_real[0], u_real[-1])) # for draw graph e(delta_t)
     v_tmp.append(generate_e(v_real[0], v_real[-1])) # for draw graph e(delta_t)
 
+  
+
+  
+
     net = net_func(delta_t[m])
-    print(len(u_real), len(v_real), len(net))
     u_real = [1]
     v_real = [0]
   draw_obl()
-  draw_error(u_tmp, v_tmp, delta_t)
+  order = 3 
+  u_tmpp = order * np.log(u_tmp[:-1]) - order * np.log(u_tmp[0])
+  v_tmpp = order * np.log(v_tmp[:-1]) - order * np.log(v_tmp[0])
+  draw_error(np.log(u_tmp), np.log(v_tmp), u_tmpp, v_tmpp, np.log(delta_t))
 
 if __name__ == "__main__":
   main()
