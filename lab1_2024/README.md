@@ -26,8 +26,24 @@ $||f(T) - f(0)||$:
 
 ![e_delta_t](delta.png)
 
+to compare the order of approximation, it is necessary to draw an error on a logarithmic scale, and draw a straight line with a logarithmic scale
+
+![draw_error](draw_error.png)
+
 
 ## __Stability__:
+The stability function for the explicit 3rd-order Adams method can be found using the error approximation method. This involves expanding the approximate solution y_n+1 and the exact solution y(t_n+1) in a Taylor series around the point t_n:
+$$
+
+y_{n+1} = y(t_{n+1}) = y(t_n + h) = y(t_n) + hy'(t_n) + 0.5h^2y”(t_n) + ...
+
+$$
+
+where y'(t_n) is the derivative of the function y(t) at t_n, y”(t_n) is the second derivative, and so on.
+
+By substituting this expansion into the formula for the extrapolation of the explicit 3rd-order Adams method, we can express the error of the method as a Taylor series expansion. By comparing coefficients at the same powers of the step size h, we can determine the corresponding coefficients of the stability function.
+
+Therefore, the stability function F(z) = 1 + z + 0.5*z^2 + 5/12*z^3 was found by analyzing the method error and approximating this error at different values of the step size h. And draw |F(z)|<= 1
 ![stability](stability.jpg)
 
 ## __Region of stability__:
