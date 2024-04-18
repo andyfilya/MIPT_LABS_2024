@@ -34,23 +34,35 @@ to calculate the exact order of approximation, for each of the values u, v, we c
 
 ![help](help.png)
 
+from this we can conclude that the **order of approximation** of __our scheme__ is 3
+
 ## __Stability__:
-The stability function for the explicit 3rd-order Adams method can be found using the error approximation method. This involves expanding the approximate solution y_n+1 and the exact solution y(t_n+1) in a Taylor series around the point t_n:
+For multistep methods such as Adams methods or prediction-correction methods, the stability domain can be represented in the complex plane as the domain within which all the roots of the characteristic equation corresponding to the method lie. If all the roots of the characteristic equation are inside the stability domain, then the method is considered stable.
+
+let's consider our scheme and apply the canonical equation for this:
+
+$$
+\frac{dy}{dx}=ky
 $$
 
-y_{n+1} = y(t_{n+1}) = y(t_n + h) = y(t_n) + hy'(t_n) + 0.5h^2y”(t_n) + ...
+substituting it into the original scheme, we obtain an equation depending on z, where $ z = k \Delta t $:
 
 $$
+\lambda ^3 + \frac{16}{12}\lambda z - \lambda^2(1+\frac{23}{12}z)=0
+$$
 
-where y'(t_n) is the derivative of the function y(t) at t_n, y”(t_n) is the second derivative, and so on.
+for the rest of the reasoning, see the pictures below (wolframalpha, maple):
 
-By substituting this expansion into the formula for the extrapolation of the explicit 3rd-order Adams method, we can express the error of the method as a Taylor series expansion. By comparing coefficients at the same powers of the step size h, we can determine the corresponding coefficients of the stability function.
+![1](maple1.png)
+![2](maple2.png)
+![3](maple3.png)
 
-Therefore, the stability function F(z) = 1 + z + 0.5*z^2 + 5/12*z^3 was found by analyzing the method error and approximating this error at different values of the step size h. And draw |F(z)|<= 1
+if we compare the obtained area of stability with the result from the well-known literature, we can find many similarities, but this inaccuracy is due to the number of points that I have selected, there are only 1000
+
+![4](maple4.png)
+
 ![stability](stability.jpg)
 
-## __Region of stability__:
-![region](region_of_stability.png)
 
 ## 2 __Exercise__:
 ![exercise](lab!_2024_2.png)
@@ -86,5 +98,7 @@ after some changes:
 **Solution C_4**:
 
 ![c4](c_4_graph.png)
+
+to set the maximum step for the explicit Euler method for this problem, I wrote the functions that you can find in the code, and the answer is that the maximum step is 17.28
 
 

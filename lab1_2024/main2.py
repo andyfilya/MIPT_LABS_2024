@@ -3,6 +3,7 @@ from scipy.special import gamma, factorial
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy.optimize import fsolve
+from numpy.linalg import eigvals
 
 t_d = 24 * 60 * 60
 k_1 = []
@@ -126,6 +127,94 @@ def solve_eq(real_t : float, net : list[float], ptr : list[float]):
     iter_num += 1 
     print(f' \n iter_num : {iter_num} \n ')
 
+def jacobian(c1, c2, c3, c4, k1):
+  """
+  Calculate the Jacobian matrix of the system.
+  """
+  dc1_dc1 = -k_2
+  dc1_dc2 = 0
+  dc1_dc3 = k1
+  dc1_dc4 = 0
+
+  dc2_dc1 = 0
+  dc2_dc2 = -k_3 * c4
+  dc2_dc3 = k1
+  dc2_dc4 = -k_3 * c2
+
+  dc3_dc1 = 0
+  dc3_dc2 = k_3 * c4
+  dc3_dc3 = -k1
+  dc3_dc4 = k_3 * c2
+
+  dc4_dc1 = k_2
+  dc4_dc2 = -k_3 * c4
+  dc4_dc3 = 0
+  dc4_dc4 = -k_3 * c2
+
+  jacobian_matrix = np.array([
+      [dc1_dc1, dc1_dc2, dc1_dc3, dc1_dc4],
+      [dc2_dc1, dc2_dc2, dc2_dc3, dc2_dc4],
+      [dc3_dc1, dc3_dc2, dc3_dc3, dc3_dc4],
+      [dc4_dc1, dc4_dc2, dc4_dc3, dc4_dc4]
+  ])
+  return jacobian_matrix
+def analyze_stability(delta_t, c1_values, c2_values, c3_values, c4_values, k1_values):
+  """
+  Analyze the stability of the explicit Euler method.
+  """
+  max_eigenvalue_product = 0
+  for i in range(len(c1_values)):
+    J = jacobian(c1_values[i], c2_values[i], c3_values[i], c4_values[i], k1_values[i])
+    eigenvalues = np.abs(eigvals(J))
+    max_eigenvalue_product = max(max_eigenvalue_product, np.max(eigenvalues * delta_t))
+  
+  if max_eigenvalue_product < 2:
+    print("Explicit Euler method is stable for this step size.")
+  else:
+    print("Explicit Euler method is unstable for this step size.")
+
+def experiment_max_step(c1_0, c2_0, c3_0, c4_0):
+  """
+  Experimentally determine the maximum stable step size.
+  """
+  max_step = delta_t
+  threshold = 1e6  # Порог для определения расходимости 
+  step_increase_factor = 1.1  # Фактор увеличения шага
+
+  while True:
+    c1_vals, c2_vals, c3_vals, c4_vals = [c1_0], [c2_0], [c3_0], [c4_0]
+    net = [0]
+    real_t = 0
+
+    # Решение системы методом Эйлера с текущим шагом
+    while real_t < 2 * t_d:
+      # ... (Логика решения, аналогичная first_step и solve_eq) ...
+
+      # Проверка на расходимость
+      if any(abs(c) > threshold for c in [c1_vals[-1], c2_vals[-1], c3_vals[-1], c4_vals[-1]]):
+        break
+
+      real_t += max_step
+      net.append(real_t)
+      
+    # Если решение не разошлось, увеличить шаг и продолжить
+    if real_t >= 2 * t_d:
+      max_step *= step_increase_factor
+    else:
+      break
+
+  print("Максимальный устойчивый шаг (приблизительно):", max_step)
+
+def visualize_max_step_dependence(k1_values, c1_0, c2_0, c3_0, c4_0):
+  max_steps = []
+  for k1 in k1_values:
+    max_step = experiment_max_step(c1_0, c2_0, c3_0, c4_0)
+    max_steps.append(max_step)
+  
+  plt.plot(k1_values, max_steps)
+  plt.xlabel("k1")
+  plt.ylabel("Максимальный устойчивый шаг")
+  plt.show()
 
 def main():
   real_t = 0
@@ -138,10 +227,14 @@ def main():
   print(c_1_real, c_2_real, c_3_real, c_4_real)
   print(net)
 
+  analyze_stability(delta_t, c_1_real, c_2_real, c_3_real, c_4_real, k_1)
+  experiment_max_step(c_1_real[0], c_2_real[0], c_3_real[0], c_4_real[0])
+  visualize_max_step_dependence([0.1, 0.2, 0.3, 0.4, 0.5], c_1_real[0], c_2_real[0], c_3_real[0], c_4_real[0])
   draw_graph_c1(c_1_real, net)
   draw_graph_c2(c_2_real, net)
   draw_graph_c3(c_3_real, net)
   draw_graph_c4(c_4_real, net)
+
 
 
 
