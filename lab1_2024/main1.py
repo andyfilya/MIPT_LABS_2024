@@ -89,8 +89,6 @@ def draw_obl():
 
   plt.show()
 
-
-
 def main():
   u_tmp, v_tmp = list(), list()
   u_tmp_2, v_tmp_2 = list(), list()
@@ -118,7 +116,12 @@ def main():
   order = 3 
   u_tmpp = order * np.log(u_tmp[:-1]) - order * np.log(u_tmp[0])
   v_tmpp = order * np.log(v_tmp[:-1]) - order * np.log(v_tmp[0])
-  draw_error(np.log(u_tmp), np.log(v_tmp), u_tmpp, v_tmpp, np.log(delta_t))
+  A = np.vstack([np.log(delta_t[:-1]), np.ones(len(delta_t[:-1]))]).T
+  B = np.vstack([np.log(delta_t[:-1]), np.ones(len(delta_t[:-1]))]).T
 
+  m1, c1 = np.linalg.lstsq(A, u_tmpp, rcond=None)[0]
+  m2, c2 = np.linalg.lstsq(B, v_tmpp, rcond=None)[0]
+  print("Уравнение прямой err(u): y = {}x + {}".format(m1 / 2, c1))
+  print("Уравнение прямой err(v): y = {}x + {}".format(m2 / 1.2, c2))
 if __name__ == "__main__":
   main()

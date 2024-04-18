@@ -30,6 +30,9 @@ to compare the order of approximation, it is necessary to draw an error on a log
 
 ![draw_error](draw_error.png)
 
+to calculate the exact order of approximation, for each of the values u, v, we construct a dependence on the step of the discrepancy
+
+![help](help.png)
 
 ## __Stability__:
 The stability function for the explicit 3rd-order Adams method can be found using the error approximation method. This involves expanding the approximate solution y_n+1 and the exact solution y(t_n+1) in a Taylor series around the point t_n:
